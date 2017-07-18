@@ -31,10 +31,36 @@
 </nav>
 <?php $this->end(); ?>
 
-<div class="col-md-12">
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-      <h1>HOME</h1>
-		</div>	
-	</div>
+<div class="col-md-8 col-md-offset-2">
+  <?php echo $this->Form->create('User'); ?>
+    <div class="row">
+      <div class="col-md-12">
+      
+        <?php if (!empty($user['image'])) { ?>
+          <img src="<?php echo $user['image']; ?>" class="img-responsive">
+        <?php } else { ?>
+          <img src="https://placehold.it/150x150" class="img-responsive">
+        <?php } ?>
+          
+      </div>
+      <div class="col-md-12">
+        <p><?php echo $this->Form->input('name'); ?></h2>
+        <p>
+        <?php 
+          $options = array('1' => 'Male', '2' => 'Female');
+          $attributes = array('legend' => false);
+          echo $this->Form->radio('gender', $options, $attributes); 
+        ?></p>
+        <p>Birthdate: <?php echo (!empty($user['birthdate'])) ? date("d-m-Y", strtotime($user['birthdate'])) : ''; ?></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>
+          <?php $user['hubby']; ?>
+        </p>
+      </div>
+    </div>
+  <?php echo $this->Form->end(__('Submit')); ?>
 </div>
+

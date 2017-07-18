@@ -15,16 +15,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <?php if (!AuthComponent::user('id')) { ?>
-          <li class="active"><a href="/">Login</a></li>
-          <li><a href="/users/add">Register</a></li>
-        <?php } ?>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <?php if (AuthComponent::user('id')) { ?>
-          <li><a href="/users/profile">Profile</a></li>
-          <li><a href="/users/logout">Logout</a></li>
-        <?php } ?>
+        <li class="active"><a href="/">Login</a></li>
+        <li><a href="/users/add">Register</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -34,7 +26,14 @@
 <div class="col-md-12">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
-      <h1>HOME</h1>
+      <?php //echo $this->Flash->render('auth'); ?>
+      <?php echo $this->Form->create('User'); ?>
+          <fieldset>
+              <?php echo $this->Form->input('email');
+              echo $this->Form->input('password');
+          ?>
+          </fieldset>
+      <?php echo $this->Form->end(__('Login')); ?>
 		</div>	
 	</div>
 </div>

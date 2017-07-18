@@ -15,26 +15,26 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <?php if (!AuthComponent::user('id')) { ?>
-          <li class="active"><a href="/">Login</a></li>
-          <li><a href="/users/add">Register</a></li>
-        <?php } ?>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <?php if (AuthComponent::user('id')) { ?>
-          <li><a href="/users/profile">Profile</a></li>
-          <li><a href="/users/logout">Logout</a></li>
-        <?php } ?>
+        <li class=""><a href="/">Login</a></li>
+        <li class="active"><a href="/users/add">Register</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <?php $this->end(); ?>
 
-<div class="col-md-12">
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-      <h1>HOME</h1>
-		</div>	
-	</div>
+<div class="col-md-8 col-md-offset-2">
+<?php echo $this->Form->create('User'); ?>
+	<fieldset>
+		<legend><?php //echo __('Register'); ?></legend>
+		<div class="form-group">
+			<?php
+				echo $this->Form->input('name', array('class' => 'form-control'));
+				echo $this->Form->input('email', array('type'=>'text', 'class' => 'form-control'));
+				echo $this->Form->input('password', array('class' => 'form-control'));
+				echo $this->Form->input('confirm_password', array('type'=>'password', 'class' => 'form-control'));
+			?>
+		</div>
+	</fieldset>
+<?php echo $this->Form->end(__('Submit', array('class' => 'btn btn-primary'))); ?>
 </div>
