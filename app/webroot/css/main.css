@@ -1,0 +1,47 @@
+.edit .gender label {
+	display: block;
+	margin-left: 15px;
+	padding:0 15px;
+}
+.edit .form-label {
+	padding: .5em;
+}
+.edit .gender {
+	padding: .5em;
+}
+.chat-box {
+	height:900px;
+	border:1px solid red;
+	position: relative;
+	padding:15px;
+}
+.chat-box .chat-control{
+	position: absolute;
+	top:15px;
+}
+.chat-box .chat-control button{
+	margin-top:15px;
+	float: right;
+}
+.chat-box .chat-convo{
+	margin-top:70px;
+}
+.chat-box .chat-msg{
+	padding:15px;
+	border:1px solid;
+	margin:5px;
+}
+.chat-box .chat-msg img {
+	width:100px;
+	display: inline-block;
+}
+.chat-box .chat-msg p {
+	width:100%;
+	overflow-wrap: break-word;
+}
+.chat-box .chat-msg.from {
+	text-align: right;
+}
+.chat-box .chat-msg.to {
+	text-align: left;
+}
