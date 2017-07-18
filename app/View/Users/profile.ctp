@@ -22,6 +22,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <?php if (AuthComponent::user('id')) { ?>
+        	<li><a href="/messages">Message</a></li>
           <li class="active"><a href="/users/profile">Profile</a></li>
           <li><a href="/users/logout">Logout</a></li>
         <?php } ?>
@@ -34,17 +35,17 @@
 	<div class="row">
 		<div class="col-md-4">
 		
-			<?php if (!empty($user['image'])) { ?>
-				<img src="<?php echo $user['image']; ?>" class="img-responsive">
-			<?php } else { ?>
+			<?php if (!empty($user['image'])) {
+				echo $this->Html->image($user['image'], array('class' => 'img-responsive'));
+			 } else { ?>
 				<img src="https://placehold.it/150x150" class="img-responsive">
 			<?php } ?>
 				
 		</div>
 		<div class="col-md-8">
 			<h2><?php echo $user['name']; ?></h2>
-			<p>Gender: <?php echo (!empty($user['gender'])) ? $user['gender'] : ''; ?></p>
-			<p>Birthdate: <?php echo (!empty($user['birthdate'])) ? date("d-m-Y", strtotime($user['birthdate'])) : ''; ?></p>
+			<p>Gender: <?php echo (!empty($user['gender'])) ? ($user['gender'] == 1) ? 'Male' : 'Female' : ''; ?></p>
+			<p>Birthdate: <?php echo (!empty($user['birthdate'])) ? date("F d, Y", strtotime($user['birthdate'])) : ''; ?></p>
 			<p>Joined: <?php echo (!empty($user['created'])) ? date("F d, Y g a", strtotime($user['created'])) : ''; ?></p>
 			<p>Last Login: <?php echo (!empty($user['last_login_time'])) ? date("F d, Y g a", strtotime($user['last_login_time'])) : ''; ?></p>
 		</div>
@@ -52,9 +53,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				<?php $user['hubby']; ?>
+				<?php echo $user['hubby']; ?>
 			</p>
-
+			<?php //debug($user) ?>
 			<a href="/users/edit">Edit</a>
 		</div>
 	</div>

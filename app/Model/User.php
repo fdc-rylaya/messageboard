@@ -40,7 +40,16 @@ class User extends AppModel {
         			'rule' => array('confirmPassword'),
         			'message' => "Password confirmation does not match"
         		)
-        	)
+        	),
+        'image' => array(
+                'rule' => array(
+                    'extension',
+                    array('gif', 'jpeg', 'png', 'jpg')
+                ),
+                'message' => 'Please supply a valid image.',
+                'required' => false,
+                'allowEmpty' => true
+            )
     );
 
 	public function confirmPassword() {

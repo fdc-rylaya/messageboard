@@ -1,52 +1,47 @@
-<div class="messages index">
-	<h2><?php echo __('Messages'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<thead>
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('to_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('from_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('content'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($messages as $message): ?>
-	<tr>
-		<td><?php echo h($message['Message']['id']); ?>&nbsp;</td>
-		<td><?php echo h($message['Message']['to_id']); ?>&nbsp;</td>
-		<td><?php echo h($message['Message']['from_id']); ?>&nbsp;</td>
-		<td><?php echo h($message['Message']['content']); ?>&nbsp;</td>
-		<td><?php echo h($message['Message']['created']); ?>&nbsp;</td>
-		<td><?php echo h($message['Message']['modified']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $message['Message']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $message['Message']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $message['Message']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $message['Message']['id']))); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</tbody>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-		'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Message'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+<?php $this->start('navbar'); ?>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <?php if (!AuthComponent::user('id')) { ?>
+          <li class="active"><a href="/">Login</a></li>
+          <li><a href="/users/add">Register</a></li>
+        <?php } ?>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <?php if (AuthComponent::user('id')) { ?>
+        	<li class="active"><a href="/messages">Message</a></li>
+          <li class=""><a href="/users/profile">Profile</a></li>
+          <li><a href="/users/logout">Logout</a></li>
+        <?php } ?>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<?php $this->end(); ?>
+<div class="col-md-8 col-md-offset-2">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($users as $key => $value) { ?>
+    <tr>
+      <td><?php echo  $value['User']['name']; ?></td>
+      <td><a href="/messages/view/<?php echo $value['User']['id'] ?>">Message Detail</a></td>
+    </tr>
+    <?php } ?>
+  </table>
+</div>  

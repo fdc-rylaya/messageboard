@@ -22,7 +22,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <?php if (AuthComponent::user('id')) { ?>
-          <li><a href="/users/profile">Profile</a></li>
+          <li><a href="/messages">Message</a></li>
+          <li class="active"><a href="/users/profile">Profile</a></li>
           <li><a href="/users/logout">Logout</a></li>
         <?php } ?>
       </ul>
@@ -30,35 +31,35 @@
   </div><!-- /.container-fluid -->
 </nav>
 <?php $this->end(); ?>
-
-<div class="col-md-8 col-md-offset-2">
-  <?php echo $this->Form->create('User'); ?>
+<div class="col-md-8 col-md-offset-2 edit">
+  <?php echo $this->Form->create('User',array('type' => 'file')); ?>
     <div class="row">
       <div class="col-md-12">
-      
-        <?php if (!empty($user['image'])) { ?>
-          <img src="<?php echo $user['image']; ?>" class="img-responsive">
-        <?php } else { ?>
-          <img src="https://placehold.it/150x150" class="img-responsive">
-        <?php } ?>
-          
+        <?php if (!empty($user['image'])) { 
+          echo $this->Html->image($user['image'], array('class' => 'img-responsive','id'=>"upload-target"));
+        } else { ?>
+          <img src="https://placehold.it/150x150" class="img-responsive" id="upload-target">
+        <?php } ?>   
+        <?php echo $this->Form->input('image',array('type' => 'file','id' => 'upload-image','required'=>false)); ?>
       </div>
       <div class="col-md-12">
-        <p><?php echo $this->Form->input('name'); ?></h2>
-        <p>
+        <p><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'])); ?></p>
+        <p><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'])); ?></p>
+        <p class="gender">
         <?php 
           $options = array('1' => 'Male', '2' => 'Female');
-          $attributes = array('legend' => false);
+          $attributes = array('legend' => false,'class'=>'');
           echo $this->Form->radio('gender', $options, $attributes); 
         ?></p>
-        <p>Birthdate: <?php echo (!empty($user['birthdate'])) ? date("d-m-Y", strtotime($user['birthdate'])) : ''; ?></p>
+        <label class="form-label"> Birthdate </label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="data[User][birthdate]" aria-describedby="basic-addon2" value="<?php echo $user['birthdate']; ?>" id="jq-calendar">
+          <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-12">
-        <p>
-          <?php $user['hubby']; ?>
-        </p>
+      <label class="form-label"> Hubby </label>
+        <textarea class="form-control" name="data[User][hubby]"><?php echo $user['hubby']; ?></textarea>
       </div>
     </div>
   <?php echo $this->Form->end(__('Submit')); ?>

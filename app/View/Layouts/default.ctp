@@ -26,9 +26,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $this->fetch('title'); ?>
 	</title>
 	<?php
-		echo $this->Html->meta('icon');
+		echo $this->Html->meta('icon');		
 
+		echo $this->Html->css('//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('main');
 
 		echo $this->fetch('meta');
 		//echo $this->fetch('css');
@@ -47,8 +49,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+			
+			<?php
+				echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
+				echo $this->Html->script('//code.jquery.com/ui/1.12.1/jquery-ui.js');
+				echo $this->Html->script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa');
+				echo $this->Html->script('main');
+			?>
 		</div>
 	</div>
 </body>

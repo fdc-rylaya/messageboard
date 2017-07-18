@@ -21,8 +21,26 @@ class MessagesController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Message->recursive = 0;
-		$this->set('messages', $this->Paginator->paginate());
+		$this->loadModel('User');
+
+		$users = $this->User->find('all', array(
+		    'joins' => array(
+		        array(
+		            'table' => 'messages',
+		            'alias' => 'message',
+		            'type' => 'INNER',
+		            'conditions' => array(
+		                'user.id = message.to_id'
+		            )
+		        )
+		    ),
+		    'conditions' => array(
+		        'User.id !=' => $this->Auth->User('id')
+		    ),
+		    'fields' => array('User.*')
+		));
+	
+		$this->set('users',$users);
 	}
 
 /**
@@ -33,11 +51,37 @@ class MessagesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->Message->exists($id)) {
-			throw new NotFoundException(__('Invalid message'));
+		$this->loadModel('User');
+		if (!$this->User->exists($id)) {
+			throw new NotFoundException(__('User does not exist'));
 		}
-		$options = array('conditions' => array('Message.' . $this->Message->primaryKey => $id));
-		$this->set('message', $this->Message->find('first', $options));
+
+		$this->Paginator->settings = array(
+				'conditions' => array(
+					'Message.from_id' => array($id,$this->Auth->User('id')),
+					'Message.to_id' => array($id,$this->Auth->User('id'))
+				),
+				'limit' => 3,
+				'order' => array('Message.id' => 'asc')
+	    );
+
+	    // similar to findAll(), but fetches paged results
+	    $messages = $this->Paginator->paginate('Message');
+
+
+	    $toUser = $this->User->find('first',array(
+		    		'conditions' => array(
+		    				'User.id' => $id
+		    			)
+		    	)
+	    	);
+
+		debug($this->getAuthUser());
+
+
+		$this->set('user', $this->getAuthUser());
+		$this->set('toUser', $toUser);
+		$this->set('messages', $messages);
 	}
 
 /**

@@ -52,7 +52,7 @@ class UsersController extends AppController {
  */
 	public function add() {
 		if ($this->Auth->loggedIn()) {
-			return $this->redirect('/');
+			return $this->redirect(array('action' => 'profile'));
 		}
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -74,21 +74,38 @@ class UsersController extends AppController {
  */
 	public function edit() {
 
+		$user = $this->getAuthUser();
 		if (!$this->User->exists($this->Auth->User('id'))) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			$this->request->data['User']['id'] = $user['id'];
+			
+			if (!empty($this->request->data['User']['image']['tmp_name']) && 
+				is_uploaded_file($this->request->data['User']['image']['tmp_name']) && 
+				$this->validImage($this->request->data['User']['image']['type'])
+				) {
+					$filename = basename($this->request->data['User']['image']['name']); 
+					$time=strtotime(date('Y-m-d H:i:s'));
+					$filePath = $_SERVER['DOCUMENT_ROOT'] .'/img/'.$time.'-'.$filename;
+				    move_uploaded_file($this->data['User']['image']['tmp_name'], $filePath);
+
+				    $this->request->data['User']['image'] = $time.'-'.$filename;
+			}
+			else {
+				$this->request->data['User']['image'] = $user['image'];
+			}
+
+			$this->set('user',$user);
+
 			if ($this->User->save($this->request->data)) {
 				$this->Flash->success(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'profile'));
 			} else {
 				$this->Flash->error(__('The user could not be saved. Please, try again.'));
 			}
 		} else {
-
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
-			$this->set('user',$this->Auth->User());
+			$this->set('user',$user);
 		}
 	}
 
@@ -120,15 +137,22 @@ class UsersController extends AppController {
 
 
 	public function login() {
+		if ($this->Auth->loggedIn()) {
+			return $this->redirect(array('action' => 'profile'));
+		}
 	    if ($this->request->is('post')) {
 	        if ($this->Auth->login()) {
 
+
+	        	//add login time, ip
 	        	$this->User->id = $this->Auth->User('id');
 	        	$this->User->saveField('last_login_time',date('Y-m-d H:i:s'));
 	        	$this->User->saveField('created_ip',$this->request->clientIp());
 	        	$this->User->saveField('modified_ip',$this->request->clientIp());
+	        	
 
-	            return $this->redirect($this->Auth->redirectUrl());
+	            //return $this->redirect($this->Auth->redirectUrl());
+	            return $this->redirect(array('action' => 'profile'));
 	        }
 	        $this->Flash->error(__('Invalid username or password, try again'));
 	    }
@@ -142,7 +166,7 @@ class UsersController extends AppController {
 		if (!$this->Auth->loggedIn()) {
 			return $this->redirect('/users/login');
 		}
-	
-		$this->set('user', $this->Auth->User());
+		
+		$this->set('user', $this->getAuthUser());
 	}
 }
