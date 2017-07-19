@@ -61,9 +61,14 @@ class AppController extends Controller {
         $this->Auth->allow('index', 'view');
     }
 
+    public function beforeRender(){
+        $this->layout = ($this->request->is("ajax")) ? "ajax" : "default";
+    }
+
 
     //get currently logged user w/ last login.
     public function getAuthUser() {
+        $this->loadModel('User');
     	if ($this->Auth->loggedIn()) { 
 	    	$options = array('conditions' => array('User.' . $this->User->primaryKey => $this->Auth->User('id')));
 			$user = $this->User->find('first', $options);
@@ -75,5 +80,16 @@ class AppController extends Controller {
     //check image type
     public function validImage($type){
         return (in_array($type, array("image/png", "image/jpeg", "image/gif"))) ? true : false;
+    }
+
+    public function getToUser($id){
+        $this->loadModel('User');
+        $toUser = $this->User->find('first',array(
+                    'conditions' => array(
+                            'User.id' => $id
+                        )
+                )
+            );
+        return $toUser;
     }
 }

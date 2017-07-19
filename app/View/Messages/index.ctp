@@ -23,7 +23,7 @@
       <ul class="nav navbar-nav navbar-right">
         <?php if (AuthComponent::user('id')) { ?>
         	<li class="active"><a href="/messages">Message</a></li>
-          <li class=""><a href="/users/profile">Profile</a></li>
+          <li class=""><a href="/users/profile"><?php echo AuthComponent::user('name'); ?></a></li>
           <li><a href="/users/logout">Logout</a></li>
         <?php } ?>
       </ul>
@@ -32,6 +32,8 @@
 </nav>
 <?php $this->end(); ?>
 <div class="col-md-8 col-md-offset-2">
+<a href="/messages/create" class="button-like btn btn-danger pull-right">Create Message</a>
+<br>
   <table>
     <tr>
       <th>Name</th>
@@ -39,7 +41,7 @@
     </tr>
     <?php foreach ($users as $key => $value) { ?>
     <tr>
-      <td><?php echo  $value['User']['name']; ?></td>
+      <td><a href="/users/view/<?php echo $value['User']['id']; ?>"><?php echo  $value['User']['name']; ?></a></td>
       <td><a href="/messages/view/<?php echo $value['User']['id'] ?>">Message Detail</a></td>
     </tr>
     <?php } ?>

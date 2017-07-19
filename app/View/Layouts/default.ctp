@@ -29,6 +29,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');		
 
 		echo $this->Html->css('//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+		
+		echo $this->Html->css('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('main');
 
@@ -38,6 +40,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	?>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<?php 
+		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
+		echo $this->Html->script('//code.jquery.com/ui/1.12.1/jquery-ui.js'); 
+	?>
 </head>
 <body>
 	<header>
@@ -47,14 +53,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<div id="content" class="row">
 			<?php echo $this->Flash->render(); ?>
 			<?php echo $this->fetch('content'); ?>
+			
 		</div>
 		<div id="footer">
-			
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 			<?php
-				echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
-				echo $this->Html->script('//code.jquery.com/ui/1.12.1/jquery-ui.js');
-				echo $this->Html->script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa');
+				echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js');
 				echo $this->Html->script('main');
+				echo $this->fetch('messagesScript');
 			?>
 		</div>
 	</div>

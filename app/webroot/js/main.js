@@ -18,4 +18,6 @@ $(document).ready(function(){
 	var src = document.getElementById("upload-image");
 	var target = document.getElementById("upload-target");
 	showImage(src,target);
+
+	
 })

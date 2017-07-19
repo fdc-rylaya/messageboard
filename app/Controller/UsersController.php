@@ -26,8 +26,18 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
+		$currentUser = $this->getAuthUser();
+		$users = $this->User->find('all', array(
+				'conditions' => array(
+						'User.id !=' => $currentUser['id'],
+					)
+			)
+		);
+		$this->layout = null;
+
+		$this->set('users',$users);
+		$this->set('_serialize', array('users'));
+
 	}
 
 /**
@@ -38,11 +48,23 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if (!$this->Auth->loggedIn()) {
+			return $this->redirect('/users/login');
+		}
+
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->User->find('first', $options));
+		$user = $this->User->find('first', array(
+				'conditions' => array(
+						'User.id' => $id
+					)
+				)
+			);
+
+		$this->set('user',$user['User']);
+		$this->set('myProfile',0);
+		$this->render('profile');
 	}
 
 /**
@@ -80,7 +102,12 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data['User']['id'] = $user['id'];
+
+			if (file_exists(($_SERVER['DOCUMENT_ROOT'] .'/img/'.$user['image'])) && !empty($this->request->data['User']['image']['tmp_name'])) {
+				unlink($_SERVER['DOCUMENT_ROOT'] .'/img/'.$user['image']);	
+			}
 			
+
 			if (!empty($this->request->data['User']['image']['tmp_name']) && 
 				is_uploaded_file($this->request->data['User']['image']['tmp_name']) && 
 				$this->validImage($this->request->data['User']['image']['type'])
@@ -166,7 +193,8 @@ class UsersController extends AppController {
 		if (!$this->Auth->loggedIn()) {
 			return $this->redirect('/users/login');
 		}
-		
+
+		$this->set('myProfile',1);
 		$this->set('user', $this->getAuthUser());
 	}
 }

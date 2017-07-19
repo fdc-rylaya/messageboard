@@ -1,4 +1,5 @@
 <?php 
+
 $this->start('navbar'); ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -32,25 +33,27 @@ $this->start('navbar'); ?>
   </div><!-- /.container-fluid -->
 </nav>
 <?php $this->end(); ?>
+<div class="col-md-7 col-md-offset-2">
+  <div class="form-group">
+    <label class="form-label">Name</label>
+    <div class="row">
+    <div class="col-md-12">
+      <select class="search-recipients form-control" id="recipient-id" style = "width:100%;">
+        <option value=""><img src="" style="width:50px; background-color:black;">Search Recipient</option>
+      </select>
+      </div> 
+    </div>
 
-<div class="chat-box col-md-12">
-	<div class="row">
-		<div class="chat-control col-md-7 col-md-offset-3">
-      <div class="row">
-        <div class="col-md-12">
-          <input type="text" style="width:320px;" placeholder="Search" class="pull-right form-control" id="search">
-        </div>
-      </div>
-      <textarea class="form-control" id="message-content"></textarea>
-			<button id="send-reply" class="btn btn-primary">Reply Message</button>
-			<div class="row chat-convo" id="messages-container">
-			</div>
-		</div>
-	</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Message</label>
+    <textarea class="form-control" id="message-content"></textarea>
+  </div>
+  <button type="button" class="btn btn-primary" id="send-message">Send</button>
 </div>
+
 <?php
-	$this->Js->set('data', array('to_id' => $to_id,'from_id' => $from_id, 'last_id' => $last_id));
-	echo $this->Html->script('messages', array('block' => 'messagesScript')); 
-	echo $this->Js->writeBuffer(array('onDomReady' => false));
-	
+  echo $this->Html->script('create', array('block' => 'messagesScript')); 
+  $this->Js->set('data', array('from_id' => $from_id));
+  echo $this->Js->writeBuffer(array('onDomReady' => false));
 ?>

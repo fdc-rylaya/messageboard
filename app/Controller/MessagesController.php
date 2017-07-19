@@ -13,7 +13,8 @@ class MessagesController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator','RequestHandler');
+	public $helpers = array('Js');
 
 /**
  * index method
@@ -37,6 +38,7 @@ class MessagesController extends AppController {
 		    'conditions' => array(
 		        'User.id !=' => $this->Auth->User('id')
 		    ),
+		    'group' => 'User.id asc',
 		    'fields' => array('User.*')
 		));
 	
@@ -55,33 +57,20 @@ class MessagesController extends AppController {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('User does not exist'));
 		}
-
-		$this->Paginator->settings = array(
+		
+		$user = $this->getAuthUser();
+		$message = $this->Message->find('first', array(
 				'conditions' => array(
 					'Message.from_id' => array($id,$this->Auth->User('id')),
 					'Message.to_id' => array($id,$this->Auth->User('id'))
 				),
-				'limit' => 3,
-				'order' => array('Message.id' => 'asc')
-	    );
+				'order' => array('Message.id' => 'desc')
+			)
+		);
 
-	    // similar to findAll(), but fetches paged results
-	    $messages = $this->Paginator->paginate('Message');
-
-
-	    $toUser = $this->User->find('first',array(
-		    		'conditions' => array(
-		    				'User.id' => $id
-		    			)
-		    	)
-	    	);
-
-		debug($this->getAuthUser());
-
-
-		$this->set('user', $this->getAuthUser());
-		$this->set('toUser', $toUser);
-		$this->set('messages', $messages);
+		$this->set('to_id',$id);
+		$this->set('from_id',$user['id']);
+		$this->set('last_id', $message['Message']['id']);
 	}
 
 /**
@@ -93,8 +82,21 @@ class MessagesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Message->create();
 			if ($this->Message->save($this->request->data)) {
-				$this->Flash->success(__('The message has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				//$this->Flash->success(__('The message has been saved.'));
+				$this->loadModel('User');
+				$user = $this->getAuthUser();
+				$toUser = $this->getToUser($this->request->data['to_id']);
+				$lastId = $this->Message->getLastInsertID();
+				$message = $this->Message->find('first',array(
+		    		'conditions' => array(
+		    				'Message.id' => $lastId
+			    			)
+			    	)
+		    	);
+				$this->layout = null;
+				$this->set(compact('user', 'toUser','message'));
+				$this->render('json/message');
+				//return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Flash->error(__('The message could not be saved. Please, try again.'));
 			}
@@ -145,4 +147,106 @@ class MessagesController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+
+	public function fetchMessages($id = null) {
+		$this->loadModel('User');
+		$this->Paginator->settings = array(
+				'conditions' => array(
+					'Message.from_id' => array($id,$this->Auth->User('id')),
+					'Message.to_id' => array($id,$this->Auth->User('id'))
+				),
+				'limit' => 5,
+				'order' => array('Message.id' => 'desc')
+	    );
+
+	    // similar to findAll(), but fetches paged results
+	    $messages = $this->Paginator->paginate('Message');
+
+
+	    $toUser = $this->getToUser($id);
+
+		$user = $this->getAuthUser();
+		$this->layout = null ;
+		$this->set(compact('user', 'toUser','messages'));
+		$this->set('_serialize', array('user','toUser','messages'));
+		if(!empty($messages)){
+			$this->render('json/messages');	
+		}
+		
+	}
+
+	public function create(){
+		$currentUser = $this->getAuthUser();
+		$this->set('from_id',$currentUser['id']);
+	}
+
+	public function search(){
+
+		$user = $this->getAuthUser();
+	    $toUser = $this->getToUser($this->request->data['to_id']);
+	    $messages = $this->Message->find('all', array(
+	    		'conditions' => array(
+					'Message.from_id' => array($user['id'],$toUser['User']['id']),
+					'Message.to_id' => array($user['id'],$toUser['User']['id']),
+					"OR" => array (
+				        "Message.content LIKE" => "%".$this->request->data['search']."%"
+				    )
+    			),
+    			'order' => array('Message.id' => 'desc')
+	    	)
+	    );
+
+	    $this->layout = null ;
+		$this->set(compact('user', 'toUser','messages'));
+		if(!empty($messages)){
+			$this->render('json/messages');	
+		}
+	}
+
+	public function latest(){
+		$user = $this->getAuthUser();
+		$toUser = $this->getToUser($this->request->data['to_id']);
+		
+		$latestMessage = $this->Message->find('first',array(
+    		'conditions' => array(
+    				'Message.from_id' => array($user['id'],$this->request->data['to_id']),
+					'Message.to_id' => array($user['id'],$this->request->data['to_id'])
+	    		),
+				'order' => array('Message.id' => 'desc')
+	    	)
+    	);
+
+    	$message = ($latestMessage['Message']['id'] != $this->request->data['last_id']) ? $latestMessage : '';
+		$this->layout = null;
+		$this->set(compact('user', 'toUser','message'));
+		if(!empty($message)){
+			$this->set('last_id',$message['Message']['id']);
+			$this->set('from_id',$user['id']);
+			$this->set('to_id',$this->request->data['to_id']);
+			$this->render('json/message');	
+		} else {
+			$this->render(false);
+		}
+
+	}
+
+	public function send(){
+		$user = $this->getAuthUser();
+		$toId = $this->getToUser($this->request->data['to_id']);
+		$content = $this->request->data['content'];
+		if ($this->request->is('post')) {
+			$this->Message->create();
+			if ($this->Message->save($this->request->data)) { 
+				$this->set(compact('user','toId','content'));
+				$this->layout = null;
+				$this->render('json/send');
+			} 
+		}
+
+		$this->render(null);
+	}
+
+
 }
+

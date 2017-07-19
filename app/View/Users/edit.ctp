@@ -23,7 +23,7 @@
       <ul class="nav navbar-nav navbar-right">
         <?php if (AuthComponent::user('id')) { ?>
           <li><a href="/messages">Message</a></li>
-          <li class="active"><a href="/users/profile">Profile</a></li>
+          <li class="active"><a href="/users/profile"><?php echo AuthComponent::user('name'); ?></a></li>
           <li><a href="/users/logout">Logout</a></li>
         <?php } ?>
       </ul>
@@ -48,7 +48,7 @@
         <p class="gender">
         <?php 
           $options = array('1' => 'Male', '2' => 'Female');
-          $attributes = array('legend' => false,'class'=>'');
+          $attributes = array('legend' => false,'class'=>'','required'=>true,'value'=>$user['gender']);
           echo $this->Form->radio('gender', $options, $attributes); 
         ?></p>
         <label class="form-label"> Birthdate </label>
@@ -59,7 +59,7 @@
       </div>
       <div class="col-md-12">
       <label class="form-label"> Hubby </label>
-        <textarea class="form-control" name="data[User][hubby]"><?php echo $user['hubby']; ?></textarea>
+        <textarea class="form-control" name="data[User][hubby]" required><?php echo $user['hubby']; ?></textarea>
       </div>
     </div>
   <?php echo $this->Form->end(__('Submit')); ?>
