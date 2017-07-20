@@ -46,6 +46,7 @@
                 <div><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'], 'required'=>true)); ?></div>
                 <div><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'], 'required'=>true)); ?></div>
               
+              <label>Gender</label>
                 <div class="gender">
                 <?php 
 
