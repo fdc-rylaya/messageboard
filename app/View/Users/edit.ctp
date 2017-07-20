@@ -48,10 +48,12 @@
               
                 <div class="gender">
                 <?php 
+
                   $options = array('1' => 'Male', '2' => 'Female');
-                  $attributes = array('legend' => false,'class'=>'','value'=>$user['gender']);
-                  //echo $this->Form->radio('gender', $options, $attributes); 
-                  echo $this->Form->input('gender', array('type'=>'radio','options' => array('Male', 'Female'), 'value' => $user['gender'], 'required'=>true)); 
+                  $attributes = array('legend' => false,'class'=>'','value'=>$user['gender'], 'required'=>true);
+                  echo $this->Form->radio('gender', $options, $attributes);
+                  echo (isset($this->validationErrors['User']['gender'][0])) ? '<span style="color:red;">'.$this->validationErrors['User']['gender'][0].'</span>' : '';
+                  //echo $this->Form->input('gender', array('type'=>'radio','options' => array('Male', 'Female'), 'value' => $user['gender'], 'required'=>true)); 
                 ?></div>
 
                 <label class="form-label">Birthdate</label>
