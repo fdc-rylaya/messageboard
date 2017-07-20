@@ -24,7 +24,7 @@ class MessagesController extends AppController {
 	public function index() {
 		$this->loadModel('User');
 
-		$users = $this->User->find('all', array(
+		$datas = $this->User->find('all', array(
 		    'joins' => array(
 		        array(
 		            'table' => 'messages',
@@ -35,14 +35,28 @@ class MessagesController extends AppController {
 		            )
 		        )
 		    ),
-		    'conditions' => array(
-		        'User.id !=' => $this->Auth->User('id')
-		    ),
 		    'group' => 'User.id asc',
-		    'fields' => array('User.*')
+		    'fields' => array('User.*','Message.*')
 		));
-	
-		$this->set('users',$users);
+		
+
+		foreach($datas as $index=>$data){
+			if($data['User']['id'] == $this->Auth->User('id')){
+				$currentMessage = $data['message'];
+			 	$fromUser = $this->User->find('first', array(
+						'conditions' => array(
+							'User.id' => $data['message']['from_id']
+						)
+					)
+				);
+				 unset($datas[$index]);
+				 $datas[$index]['User'] = $fromUser['User'];
+				 $datas[$index]['message'] = $currentMessage;
+			}
+		}
+
+		
+		$this->set('users',$datas);
 	}
 
 /**

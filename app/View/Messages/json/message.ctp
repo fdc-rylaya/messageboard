@@ -7,7 +7,7 @@
 			<div class="pull-right chat-msg from">
 			<div class="row">
 				<div class="col-md-12">
-					<a href="#" class="remove pull-right" msg-id="<?php echo $value['Message']['id']; ?>">X</a>
+					<a href="#" class="remove pull-right" msg-id="<?php echo $message['Message']['id']; ?>">X</a>
 				</div>
 			</div>
 				<?php 
@@ -27,7 +27,7 @@
 			<div class="pull-left chat-msg to">
 			<div class="row">
 				<div class="col-md-12">
-					<a href="#" class="remove pull-left" msg-id="<?php echo $value['Message']['id']; ?>">X</a>
+					<a href="#" class="remove pull-left" msg-id="<?php echo $message['Message']['id']; ?>">X</a>
 				</div>		
 			</div>
 			<?php if (!empty($toUser['User']['image'])) {  

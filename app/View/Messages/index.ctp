@@ -46,7 +46,6 @@
           <th>&nbsp;</th>
       </tr>
     <?php 
-   
       foreach ($users as $key => $value) {
       ?>
       <tr>

@@ -1,5 +1,6 @@
 
 <?php 
+
 	foreach ($messages as $key => $value) { 
 			if($value['Message']['from_id'] == $user['id']) {
 	?>
