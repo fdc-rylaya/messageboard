@@ -37,9 +37,10 @@ $("#send-message").on('click',function(){
       'content' : $("#message-content").val()
     }
   }).done(function( value ) {
-  	
+  	value = JSON.parse(value);
+    
   	if(value.status == 'success') {
-  		//window.href = root + '/messages/view/'+ $("#recipient-id").val()
+  		window.location.href = root + '/messages/view/'+ $("#recipient-id").val()
   	}
   });
 });

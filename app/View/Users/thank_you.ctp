@@ -1,4 +1,4 @@
 <div class="col-md-12 text-center">
 	<p>Thank you for Registering</p>
-	<a href="/">Back to homepage</a>
+	<a href="/" class="button-like btn btn-danger" style="">Back to homepage</a>
 </div>

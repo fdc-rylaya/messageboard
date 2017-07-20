@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">Message Board</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -40,26 +40,33 @@
         } else { ?>
           <img src="https://placehold.it/150x150" class="img-responsive" id="upload-target">
         <?php } ?>   
-        <?php echo $this->Form->input('image',array('type' => 'file','id' => 'upload-image','required'=>false)); ?>
+        <?php echo $this->Form->input('image',array('type' => 'file','id' => 'upload-image', 'required'=>false)); ?>
       </div>
       <div class="col-md-12">
-        <p><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'])); ?></p>
-        <p><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'])); ?></p>
-        <p class="gender">
+        <div><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'], 'required'=>true)); ?></div>
+        <div><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'], 'required'=>true)); ?></div>
+        
+        
+        <div class="gender">
         <?php 
           $options = array('1' => 'Male', '2' => 'Female');
-          $attributes = array('legend' => false,'class'=>'','required'=>true,'value'=>$user['gender']);
-          echo $this->Form->radio('gender', $options, $attributes); 
-        ?></p>
-        <label class="form-label"> Birthdate </label>
+          $attributes = array('legend' => false,'class'=>'','value'=>$user['gender']);
+          //echo $this->Form->radio('gender', $options, $attributes); 
+          echo $this->Form->input('gender', array('type'=>'radio','options' => array('Male', 'Female'), 'value' => $user['gender'], 'required'=>true)); 
+        ?></div>
+
+        <label class="form-label">Birthdate</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="data[User][birthdate]" aria-describedby="basic-addon2" value="<?php echo $user['birthdate']; ?>" id="jq-calendar">
+          <?php 
+          echo $this->Form->input('birthdate',array('type'=>'text', 'class'=>'form-control jq-calendar', 'aria-describedby'=>"basic-addon2", 'value'=>$user['birthdate'], 'required'=>true,'label' => false, 'div'=> false));
+          ?>
           <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-calendar"></i></span>
         </div>
       </div>
       <div class="col-md-12">
-      <label class="form-label"> Hubby </label>
-        <textarea class="form-control" name="data[User][hubby]" required><?php echo $user['hubby']; ?></textarea>
+      
+        <div><?php echo $this->Form->input('hubby',array('class'=>'form-control','value'=>$user['hubby'], 'required'=>true)); ?></div>
+        
       </div>
     </div>
   <?php echo $this->Form->end(__('Submit')); ?>

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#jq-calendar").datepicker({
+	$(".jq-calendar").datepicker({
 		maxDate: 0,
 		dateFormat:'yy-mm-dd'
 	});
@@ -18,6 +18,4 @@ $(document).ready(function(){
 	var src = document.getElementById("upload-image");
 	var target = document.getElementById("upload-target");
 	showImage(src,target);
-
-	
 })

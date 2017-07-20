@@ -80,6 +80,11 @@ class UsersController extends AppController {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Flash->success(__('The user has been saved.'));
+
+				$this->User->id = $this->User->getLastInsertID();
+	        	$this->User->saveField('created_ip',$this->request->clientIp());
+	        	$this->User->saveField('modified_ip',$this->request->clientIp());
+
 				return $this->redirect(array('action' => 'thankYou'));
 			} else {
 				$this->Flash->error(__('The user could not be saved. Please, try again.'));
@@ -95,7 +100,7 @@ class UsersController extends AppController {
  * @return void
  */
 	public function edit() {
-
+		
 		$user = $this->getAuthUser();
 		if (!$this->User->exists($this->Auth->User('id'))) {
 			throw new NotFoundException(__('Invalid user'));
@@ -103,7 +108,9 @@ class UsersController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data['User']['id'] = $user['id'];
 
-			if (file_exists(($_SERVER['DOCUMENT_ROOT'] .'/img/'.$user['image'])) && !empty($this->request->data['User']['image']['tmp_name'])) {
+			//debug($this->request);
+
+			if (is_file(($_SERVER['DOCUMENT_ROOT'] .'/img/'.$user['image'])) && !empty($this->request->data['User']['image']['tmp_name'])) {
 				unlink($_SERVER['DOCUMENT_ROOT'] .'/img/'.$user['image']);	
 			}
 			
@@ -174,9 +181,6 @@ class UsersController extends AppController {
 	        	//add login time, ip
 	        	$this->User->id = $this->Auth->User('id');
 	        	$this->User->saveField('last_login_time',date('Y-m-d H:i:s'));
-	        	$this->User->saveField('created_ip',$this->request->clientIp());
-	        	$this->User->saveField('modified_ip',$this->request->clientIp());
-	        	
 
 	            //return $this->redirect($this->Auth->redirectUrl());
 	            return $this->redirect(array('action' => 'profile'));

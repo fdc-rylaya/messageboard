@@ -20,15 +20,6 @@ $('body').on('click','.next',function(e) {
 	e.preventDefault();
 });
 
-$.ajax({
-    url: root + '/messages/fetchMessages/'+ window.app.data.to_id,
-  cache: false
-}).done(function( html ) {
-  $("#messages-container").find('.next').remove();
-  $("#messages-container").append(html);
-  $("#messages-container").find('span.next').remove();
-});
-
 $("#send-reply").on('click',function(){
   $.ajax({
         type: 'POST',
@@ -86,3 +77,28 @@ function doneTyping () {
     
   });
 }
+
+$("body").on('click','.remove',function(){
+    var that = this;
+    $.ajax({
+      type: 'POST',
+      url: root + '/messages/delete/' + $(that).attr('msg-id')
+    }).done(function( value ) {
+      value = JSON.parse(value);
+
+      if(value.status == 'success'){
+        $(that).parent().parent().parent().fadeOut(500);
+      }
+
+      //console.log(html)
+    });
+  });
+
+$.ajax({
+    url: root + '/messages/fetchMessages/'+ window.app.data.to_id,
+  cache: false
+}).done(function( html ) {
+  $("#messages-container").find('.next').remove();
+  $("#messages-container").append(html);
+  $("#messages-container").find('span.next').remove();
+});

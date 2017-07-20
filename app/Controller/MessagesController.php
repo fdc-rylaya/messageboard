@@ -140,12 +140,14 @@ class MessagesController extends AppController {
 			throw new NotFoundException(__('Invalid message'));
 		}
 		$this->request->allowMethod('post', 'delete');
-		if ($this->Message->delete()) {
-			$this->Flash->success(__('The message has been deleted.'));
+		if ($this->Message->delete()) {	
+			$this->layout = null;
+			$this->render('json/success');
 		} else {
-			$this->Flash->error(__('The message could not be deleted. Please, try again.'));
+			$this->layout = null;
+			$this->render(false);
 		}
-		return $this->redirect(array('action' => 'index'));
+		
 	}
 
 
@@ -232,21 +234,22 @@ class MessagesController extends AppController {
 	}
 
 	public function send(){
-		$user = $this->getAuthUser();
-		$toId = $this->getToUser($this->request->data['to_id']);
-		$content = $this->request->data['content'];
 		if ($this->request->is('post')) {
+			$user = $this->getAuthUser();
+			$toId = $this->getToUser($this->request->data['to_id']);
+			$content = $this->request->data['content'];
+		
 			$this->Message->create();
-			if ($this->Message->save($this->request->data)) { 
+
+			if ($this->Message->save($this->request->data)) {
 				$this->set(compact('user','toId','content'));
 				$this->layout = null;
-				$this->render('json/send');
+				$this->render('json/success');
 			} 
+		} else {
+			$this->layout = null;
+			$this->render(false);	
 		}
-
-		$this->render(null);
 	}
-
-
 }
 

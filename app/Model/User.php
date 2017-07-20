@@ -48,7 +48,31 @@ class User extends AppModel {
                 ),
                 'message' => 'Please supply a valid image.',
                 'required' => false,
-                'allowEmpty' => true
+                'allowEmpty' => false
+            ),
+        'gender' => array(
+                'required' => array(
+                    'rule' => array('notBlank'),
+                    'message' => 'Is required.',
+                    'required' => true,
+                    'on' => 'update'
+                )
+            ),
+        'birthdate' => array(
+                'required' => array(
+                    'rule' => array('notBlank'),
+                    'message' => 'Is required.',
+                    'required' => true,
+                    'on' => 'update'
+                )
+            ),
+        'hubby' => array(
+               'required' => array(
+                    'rule' => array('notBlank'),
+                    'message' => 'Is required.',
+                    'required' => true,
+                    'on' => 'update'
+                )
             )
     );
 

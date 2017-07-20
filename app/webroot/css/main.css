@@ -53,6 +53,13 @@
 .chat-box .chat-msg.to {
 	text-align: left;
 }
+.remove {
+	transition: all .4s;
+}
+.remove:hover{
+	color:red;
+	text-decoration: none;
+}
 
 .button-like {
 -webkit-appearance: button;
@@ -75,4 +82,7 @@
 .select2-container .select2-selection--single {
 	height: auto;
 	padding:5px;
+}
+.gender legend{
+	color:black;
 }

@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">Message Board</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,18 +32,38 @@
 </nav>
 <?php $this->end(); ?>
 <div class="col-md-8 col-md-offset-2">
-<a href="/messages/create" class="button-like btn btn-danger pull-right">Create Message</a>
+
+<?php if(!empty($users)) {  ?>
+<div class="row">
+  <div class="col-md-12">
+    <a href="/messages/create" class="button-like btn btn-danger pull-right">Create Message</a>
+  </div>
+</div>
 <br>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>&nbsp;</th>
-    </tr>
-    <?php foreach ($users as $key => $value) { ?>
-    <tr>
-      <td><a href="/users/view/<?php echo $value['User']['id']; ?>"><?php echo  $value['User']['name']; ?></a></td>
-      <td><a href="/messages/view/<?php echo $value['User']['id'] ?>">Message Detail</a></td>
-    </tr>
-    <?php } ?>
-  </table>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>&nbsp;</th>
+  </tr>
+  <?php 
+ 
+    foreach ($users as $key => $value) {
+    ?>
+      <tr>
+        <td><a href="/users/view/<?php echo $value['User']['id']; ?>"><?php echo  $value['User']['name']; ?></a></td>
+        <td><a href="/messages/view/<?php echo $value['User']['id'] ?>">Message Detail</a></td>
+      </tr>
+      <?php 
+    } 
+    
+  ?>
+</table>
+<?php } else { ?>
+<div class="row">
+  <div class="col-md-12">
+    <p>Inbox is empty. Start a conversation now :)</p>  
+    <div><a href="/messages/create" class="button-like btn btn-danger">Create Message</a></div>
+  </div>
+</div>
+  <?php } ?>
 </div>  
