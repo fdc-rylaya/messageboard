@@ -41,7 +41,7 @@ $this->start('navbar'); ?>
                     <option value=""><img src="" style="width:50px; background-color:black;">Search Recipient</option>
                 </select>
             </div> 
-        </div>s
+        </div>
     </div>
     <div class="form-group">
         <label class="form-label">Message</label>
