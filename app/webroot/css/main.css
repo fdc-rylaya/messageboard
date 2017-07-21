@@ -140,12 +140,12 @@ body{
 .chat-msg-container a.from{
     position: absolute;
     right: 30px;
-    bottom: 0;
+    bottom: 20px;
 }
 .chat-msg-container a.to {
 	position: absolute;
-	left:30px;
-    bottom: 0;
+	left:20px;
+    bottom: 20px;
 }
 
 .profile h1, .profile h2{
@@ -199,4 +199,42 @@ body{
 }
 #UserGender2 {
 	margin-left:5px;
+}
+
+.fb-msg .search,.fb-msg textarea {
+	margin: 0;
+	border-top:0;
+	border-left:0;
+	border-right:0;
+	width:100%;
+	padding:2px;
+}
+
+.fb-msg #message-content {
+	height: 80px;
+	resize: none;
+}
+
+.fb-msg h3 {
+	margin:0;
+	color:white !important;
+	padding:0;
+	display: inline-block;
+    vertical-align: middle;
+    margin-right:15px;
+}
+input:focus, textarea:focus {
+    outline:none;
+}
+
+.time {
+	font-size:12px;
+}
+.time.to {
+	padding-left:60px;
+	text-align: left;
+}
+.time.from {
+	padding-right:60px;
+	text-align: right;
 }

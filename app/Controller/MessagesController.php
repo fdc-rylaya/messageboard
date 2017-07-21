@@ -79,6 +79,14 @@ class MessagesController extends AppController {
 			)
 		);
 
+		$toUser = $this->User->find('first', array(
+				'conditions' => array(
+					'User.id' => $id
+				)
+			)
+		);
+		//debug($toUser);
+		$this->set('toUser', $toUser);
 		$this->set('to_id',$id);
 		$this->set('from_id',$user['id']);
 		$this->set('last_id', $message['Message']['id']);
@@ -214,6 +222,8 @@ class MessagesController extends AppController {
 		$this->set(compact('user', 'toUser','messages'));
 		if(!empty($messages)){
 			$this->render('json/messages');	
+		} else {
+			$this->render(null);	
 		}
 	}
 

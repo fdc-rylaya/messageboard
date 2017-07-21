@@ -12,9 +12,10 @@
 						</div>
 					</div>
 					<p><?php echo $message['Message']['content'] ?></p>
-					<p class="time"><i><?php echo $message['Message']['created'] ?></i></p>
+					
 				</div>
 				<div class="clear"></div>
+				<p class="time from"><i>Sent on <?php echo $message['Message']['created'] ?></i></p>
 				<?php 
 					if (!empty($user['image'])) {  
 						echo '<a href="/users/profile" class="from">'.$this->Html->image($user['image'],array('class' => 'img-responsive img-circle')).'</a>';
@@ -36,9 +37,10 @@
 					</div>
 				
 					<p ><?php echo $message['Message']['content'] ?></p>
-					<p class="time"><i><?php echo $message['Message']['created'] ?></i></p>
+					
 				</div>
 				<div class="clear"></div>
+				<p class="time to"><i>Sent on <?php echo $message['Message']['created'] ?></i></p>
 				<?php if (!empty($toUser['User']['image'])) {  
 					echo '<a href="/users/view/'.$toUser['User']['id'].'" class="to">'.$this->Html->image($toUser['User']['image'], array('class' => 'img-responsive img-circle')).'</a>';
 				} ?>

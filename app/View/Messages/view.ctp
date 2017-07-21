@@ -33,19 +33,27 @@ $this->start('navbar'); ?>
 </nav>
 <?php $this->end(); ?>
 
-<div class="chat-box col-md-12">
-  	<div class="row">
-    		<div class="chat-control col-md-7 col-md-offset-3">
-            <div class="row">
-              <div class="col-md-4 col-md-offset-4">
-                <input type="text" placeholder="Search conversation" class="pull-right form-control" id="search">
-              </div>
+<div class="chat-box col-md-12 fb-msg">
+    <div class="row">
+        <div class="chat-control col-md-7 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading"> 
+                    <h3><?php echo $toUser['User']['name']; ?> </h3>
+                    <span class="label label-success">Typically replies after an hour...</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <input type="text" placeholder="Search conversation"  class="pull-right search" id="search">
+                        </div>
+                    </div>
+                    <textarea class="" id="message-content" placeholder="Hello..."></textarea>
+                    <button id="send-reply" class="btn btn-primary">Reply Message</button>
+                    <div class="row chat-convo" id="messages-container"></div>
+                </div>
             </div>
-            <textarea class="form-control" id="message-content"></textarea>
-      			<button id="send-reply" class="btn btn-primary">Reply Message</button>
-      			<div class="row chat-convo" id="messages-container"></div>
-    		</div>
-  	</div>
+        </div>
+    </div>
 </div>
 <?php
 	$this->Js->set('data', array('to_id' => $to_id,'from_id' => $from_id, 'last_id' => $last_id));
