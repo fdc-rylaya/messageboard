@@ -32,43 +32,70 @@
 </nav>
 <?php $this->end(); ?>
 <div class="col-md-8 col-md-offset-2 edit">
-    <?php echo $this->Form->create('User',array('type' => 'file')); ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php if (!empty($user['image'])) { 
-                  echo $this->Html->image($user['image'], array('class' => 'img-responsive','id'=>"upload-target"));
-                } else { ?>
-                  <img src="https://placehold.it/150x150" class="img-responsive" id="upload-target">
-                <?php } ?>   
-                <?php echo $this->Form->input('image',array('type' => 'file','id' => 'upload-image', 'required'=>false)); ?>
-            </div>
-            <div class="col-md-12">
-                <div><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'], 'required'=>true)); ?></div>
-                <div><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'], 'required'=>true)); ?></div>
-              
-              <label>Gender</label>
-                <div class="gender">
-                <?php 
+  <div class="panel panel-primary">
+      <div class="panel-heading"> 
+        <h1>Edit</h1>
+      </div>
+      <div class="panel-body">
+      <?php echo $this->Form->create('User',array('type' => 'file')); ?>
+          <div class="row">
+              <div class="col-md-5 col-md-offset-4">
+                  <?php if (!empty($user['image'])) { 
+                    echo $this->Html->image($user['image'], array('class' => 'img-responsive img-circle','id'=>"upload-target",'label' => false));
+                  } else { ?>
+                    <img src="https://placehold.it/150x150" class="img-responsive img-circle" id="upload-target">
+                  <?php } ?>   
+                  <?php echo $this->Form->input('image',array('type' => 'file','id' => 'upload-image', 'required'=>false)); ?>
+              </div>
+              <div class="col-md-12">
+                  <div><?php echo $this->Form->input('name',array('class'=>'form-control','value'=>$user['name'], 'required'=>true , 'format' => array('before', 'label', 'between', 'input', 'after'))); ?>
+                    <?php 
+                      echo (isset($this->validationErrors['User']['name'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
+                    ?>
 
-                  $options = array('1' => 'Male', '2' => 'Female');
-                  $attributes = array('legend' => false,'class'=>'','value'=>$user['gender'], 'required'=>true);
-                  echo $this->Form->radio('gender', $options, $attributes);
-                  echo (isset($this->validationErrors['User']['gender'][0])) ? '<span style="color:red;">'.$this->validationErrors['User']['gender'][0].'</span>' : '';
-                  //echo $this->Form->input('gender', array('type'=>'radio','options' => array('Male', 'Female'), 'value' => $user['gender'], 'required'=>true)); 
-                ?></div>
-
-                <label class="form-label">Birthdate</label>
-                <div class="input-group">
+                  </div>
+                  <div><?php echo $this->Form->input('email',array('class'=>'form-control','value'=>$user['email'], 'required'=>true, 'format' => array('before', 'label', 'between', 'input', 'after'))); ?>
+                    
+                    <?php 
+                      echo (isset($this->validationErrors['User']['email'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
+                    ?>
+                  </div>
+                
+                <label class="form-label">Gender</label>
+                  <div class="gender">
                   <?php 
-                  echo $this->Form->input('birthdate',array('type'=>'text', 'class'=>'form-control jq-calendar', 'aria-describedby'=>"basic-addon2", 'value'=>$user['birthdate'], 'required'=>true,'label' => false, 'div'=> false));
-                  ?>
-                  <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div><?php echo $this->Form->input('hubby',array('class'=>'form-control','value'=>$user['hubby'], 'required'=>true)); ?></div>
-            </div>
-        </div>
-    <?php echo $this->Form->end(__('Submit')); ?>
+
+                    $options = array('1' => 'Male', '2' => 'Female');
+                    $attributes = array('legend' => false,'class'=>'','value'=>$user['gender'], 'required'=>true);
+                    echo $this->Form->radio('gender', $options, $attributes);
+                    echo (isset($this->validationErrors['User']['gender'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
+                    //echo $this->Form->input('gender', array('type'=>'radio','options' => array('Male', 'Female'), 'value' => $user['gender'], 'required'=>true)); 
+                  ?></div>
+
+                  <label class="form-label">Birthdate</label>
+                  <div class="input-group">
+                    <?php 
+                    echo $this->Form->input('birthdate',array('type'=>'text', 'class'=>'form-control jq-calendar', 'aria-describedby'=>"basic-addon2", 'value'=>$user['birthdate'], 'required'=>true,'label' => false, 'div'=> false, 'legend' => false, 'format' => array('before', 'label', 'between', 'input', 'after')));
+                    ?>
+                    <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
+                   <?php 
+                      echo (isset($this->validationErrors['User']['birthdate'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
+                    ?>
+
+              </div>
+              <div class="col-md-12">
+                  <div><?php echo $this->Form->input('hubby',array('class'=>'form-control','value'=>$user['hubby'], 'required'=>true, 'format' => array('before', 'label', 'between', 'input'))); ?>
+                    
+                    <?php 
+                      echo (isset($this->validationErrors['User']['hubby'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
+                    ?>
+                  </div>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <?php echo $this->Form->end(); ?>
+      </div>
+</div>
 </div>
 

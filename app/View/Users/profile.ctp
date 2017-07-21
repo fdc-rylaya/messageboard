@@ -31,31 +31,56 @@
     </div><!-- /.container-fluid -->
 </nav>
 <?php $this->end(); ?>
-<div class="col-md-8 col-md-offset-2">
-  	<div class="row">
-    		<div class="col-md-4">
-      			<?php if (!empty($user['image'])) {
-      				echo $this->Html->image($user['image'], array('class' => 'img-responsive'));
-      			 } else { ?>
-      				<img src="https://placehold.it/150x150" class="img-responsive">
-      			<?php } ?>
-    		</div>
-    		<div class="col-md-8">
-      			<h2><?php echo $user['name']; ?></h2>
-      			<p>Gender: <?php echo (!empty($user['gender'])) ? ($user['gender'] == 1) ? 'Male' : 'Female' : ''; ?></p>
-      			<p>Birthdate: <?php echo (!empty($user['birthdate'])) ? date("F d, Y", strtotime($user['birthdate'])) : ''; ?></p>
-      			<p>Joined: <?php echo (!empty($user['created'])) ? date("F d, Y g a", strtotime($user['created'])) : ''; ?></p>
-      			<p>Last Login: <?php echo (!empty($user['last_login_time'])) ? date("F d, Y g a", strtotime($user['last_login_time'])) : ''; ?></p>
-    		</div>
-  	</div>
-  	<div class="row">
-    		<div class="col-md-12">
-    			<p>
-    				<?php echo $user['hubby']; ?>
-    			</p>
-    			<?php if(isset($myProfile) && $myProfile) { ?>
-            <a href="/users/edit">Edit</a>
-          <?php } ?>
-    		</div>
-  	</div>
+<div class="col-md-8 col-md-offset-2 profile">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+    <h2><?php echo $user['name']; ?></h2>
+    </div>
+    	<div class="row">
+      		<div class="col-md-6 col-md-offset-3">
+        			<?php if (!empty($user['image'])) {
+        				echo $this->Html->image($user['image'], array('class' => 'img-responsive img-circle'));
+        			 } else { ?>
+        				<img src="https://placehold.it/150x150" class="img-responsive img-circle">
+        			<?php } ?>
+      		</div>
+      		<div class="col-md-12">
+        			
+        			<p><?php echo (!empty($user['gender'])) ? ($user['gender'] == 1) ? 'Male' : 'Female' : ''; ?></p>
+        			<p><?php echo (!empty($user['birthdate'])) ? date("F d, Y", strtotime($user['birthdate'])) : ''; ?></p>      			
+      		</div>
+          <div class="col-md-6">
+          <table>
+            <tr>
+              <td>Joined</td>            
+            </tr>
+            <tr>
+              <td> <?php echo (!empty($user['created'])) ? date("F d, Y g a", strtotime($user['created'])) : ''; ?></td>
+            </tr>
+          </table>
+          </div>
+          <div class="col-md-6">
+          <table>
+            <tr>
+              <td>Last Login</td>
+            </tr>
+            <tr>
+              <td><?php echo (!empty($user['last_login_time'])) ? date("F d, Y g a", strtotime($user['last_login_time'])) : ''; ?></td>
+            </tr>
+          </table>
+          </div>
+    	</div>
+    	<div class="row">
+      		<div class="col-md-12 hobby">
+          <hr>
+      			<p>
+      				<?php echo $user['hubby']; ?>
+      			</p>
+      			<?php if(isset($myProfile) && $myProfile) { ?>
+              <a href="/users/edit" class="btn btn-primary">Edit</a>
+            <?php } ?>
+      		</div>
+    	</div>
+    </div>
 </div>
+

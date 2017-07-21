@@ -32,6 +32,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		
 		echo $this->Html->css('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
 		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('sweetalert');
 		echo $this->Html->css('main');
 
 		echo $this->fetch('meta');
@@ -59,6 +60,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 			<?php
 				echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js');
+				echo $this->Html->script('sweetalert.min');
 				echo $this->Html->script('main');
 				echo $this->fetch('messagesScript');
 			?>

@@ -36,7 +36,7 @@
 <?php if(!empty($users)) {  ?>
 <div class="row">
     <div class="col-md-12">
-        <a href="/messages/create" class="button-like btn btn-danger pull-right">Create Message</a>
+        <a href="/messages/create" class="btn btn-danger pull-right">Create Message</a>
     </div>
 </div>
 <br>
@@ -59,8 +59,8 @@
 <?php } else { ?>
 <div class="row">
     <div class="col-md-12">
-        <p>Inbox is empty. Start a conversation now :)</p>  
-        <div><a href="/messages/create" class="button-like btn btn-danger">Create Message</a></div>
+        <h1>Inbox is empty. Start a conversation now :)</h1>  
+        <div><a href="/messages/create" class="btn btn-danger center-block" style="width:130px">Create Message</a></div>
     </div>
 </div>
   <?php } ?>

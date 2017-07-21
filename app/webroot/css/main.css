@@ -1,3 +1,11 @@
+/*Resets*/
+h1, h2, h3 {
+	color:#949494 !important;  
+	background:inherit;
+}
+body{
+	color:#d9dbdb; 
+}
 .edit .gender label {
 	display: block;
 	margin-left: 15px;
@@ -138,4 +146,56 @@
 	position: absolute;
 	left:30px;
     bottom: 0;
+}
+
+.profile h1, .profile h2{
+	text-align: center;
+	color:white !important;
+}
+.profile p {
+	text-align: center;
+	color:#9a9a9a; 
+}
+.profile td{
+	text-align: center;
+	border:0;
+	background-color:inherit;
+}
+.hobby p{
+	text-align: left;
+}
+.profile img {
+	margin:15px 0;
+}
+.hobby p{
+	padding:0 15px;
+	color:black;
+}
+.hobby a {
+	display: block;
+	margin: 15px auto;
+	width:90px;
+	padding:5px;
+	text-align: center;
+
+}
+
+.edit h1{
+	color:white !important;
+	margin:0;
+	padding:15px 0;
+}
+.edit form .error, form .error-message {
+	color:inherit;
+}
+
+.edit form .error{
+	background:inherit;
+}
+
+#UserGender1 {
+	margin-left:5px;
+}
+#UserGender2 {
+	margin-left:5px;
 }

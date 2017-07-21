@@ -80,18 +80,30 @@ function doneTyping () {
 
 $("body").on('click','.remove',function(){
     var that = this;
-    $.ajax({
+
+    swal({
+      title: "Delete Message?",
+      text: "Are you sure you want to delete?",
+      type: "info",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true,
+    },
+    function(){
+      $.ajax({
       type: 'POST',
       url: root + '/messages/delete/' + $(that).attr('msg-id')
-    }).done(function( value ) {
-      value = JSON.parse(value);
+      }).done(function( value ) {
+        value = JSON.parse(value);
 
-      if(value.status == 'success'){
-        $(that).parent().parent().parent().fadeOut(500);
-      }
-
-      //console.log(html)
+        if(value.status == 'success'){
+          $(that).parent().parent().parent().parent().fadeOut(500);
+          swal("Success!","Message deleted",'success');
+        }
+      });
     });
+
+    
   });
 
 $.ajax({
