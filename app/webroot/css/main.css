@@ -170,6 +170,7 @@ body{
 .hobby p{
 	padding:0 15px;
 	color:black;
+	word-wrap: break-word;
 }
 .hobby a {
 	display: block;

@@ -85,7 +85,9 @@
 
               </div>
               <div class="col-md-12">
-                  <div><?php echo $this->Form->input('hubby',array('class'=>'form-control','value'=>$user['hubby'], 'required'=>true, 'format' => array('before', 'label', 'between', 'input'))); ?>
+                  <div>
+                  <label>Hobby</label>
+                  <?php echo $this->Form->input('hubby',array('class'=>'form-control','value'=>$user['hubby'], 'required'=>true, 'format' => array('before', 'between', 'input'))); ?>
                     
                     <?php 
                       echo (isset($this->validationErrors['User']['hubby'][0])) ? '<p style="color:red; padding-left:10px;">'.$this->validationErrors['User']['gender'][0].'</p>' : '';
