@@ -37,8 +37,8 @@ $this->start('navbar'); ?>
   	<div class="row">
     		<div class="chat-control col-md-7 col-md-offset-3">
             <div class="row">
-              <div class="col-md-12">
-                <input type="text" style="width:320px;" placeholder="Search" class="pull-right form-control" id="search">
+              <div class="col-md-4">
+                <input type="text" placeholder="Search conversation" class="pull-right form-control" id="search">
               </div>
             </div>
             <textarea class="form-control" id="message-content"></textarea>

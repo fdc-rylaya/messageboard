@@ -23,40 +23,37 @@ class MessagesController extends AppController {
  */
 	public function index() {
 		$this->loadModel('User');
-
-		$datas = $this->User->find('all', array(
-		    'joins' => array(
-		        array(
-		            'table' => 'messages',
-		            'alias' => 'message',
-		            'type' => 'INNER',
-		            'conditions' => array(
-		                'user.id = message.to_id'
-		            )
-		        )
-		    ),
-		    'group' => 'User.id asc',
-		    'fields' => array('User.*','Message.*')
-		));
 		
-
-		foreach($datas as $index=>$data){
-			if($data['User']['id'] == $this->Auth->User('id')){
-				$currentMessage = $data['message'];
-			 	$fromUser = $this->User->find('first', array(
-						'conditions' => array(
-							'User.id' => $data['message']['from_id']
-						)
+		//get all user messages
+		$messages = $this->Message->find('all', array(
+				'conditions' => array(
+					'OR' => array(
+						array('Message.to_id' => $this->Auth->User('id')),
+            			array('Message.from_id' => $this->Auth->User('id'))
 					)
-				);
-				 unset($datas[$index]);
-				 $datas[$index]['User'] = $fromUser['User'];
-				 $datas[$index]['message'] = $currentMessage;
-			}
+				)
+			)
+		);
+					
+		//ready for strip
+		$inIds = array();
+		foreach ($messages as $key => $message) {
+			array_push($inIds, $message['Message']['to_id']);
+			array_push($inIds, $message['Message']['from_id']);
 		}
+		
+		$users = $this->User->find('all', array(
+				'conditions' => array(
+					'User.id' => array_unique($inIds), //remove duplicate id
+					'User.id !=' => $this->Auth->User('id')
+				),
+				'order' => array('User.id' => 'desc')
+			)
+		);
 
 		
-		$this->set('users',$datas);
+
+		$this->set('users',$users);
 	}
 
 /**

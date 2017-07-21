@@ -32,7 +32,7 @@
 }
 .chat-box .chat-msg{
 	padding:15px;
-	border:1px solid;
+	/*border:1px solid;*/
 	border-radius: 8px;
 	margin:5px;
 }
@@ -49,10 +49,39 @@
 }
 .chat-box .chat-msg.from {
 	text-align: right;
+	background-color: #0085ff;
+	color:white ;
+    margin-right: 69px;
 }
+
 .chat-box .chat-msg.to {
 	text-align: left;
+	background-color: #f2f1f1;
+	color:black;
+	margin-left: 60px;
 }
+
+.chat-box .chat-msg.from .remove{
+    border-radius: 44px;
+    background-color: red;
+    width: 20px;
+    text-align: center;
+    color: white;
+    top: -23px;
+    position: absolute;
+}
+
+.chat-box .chat-msg.to .remove{
+    border-radius: 44px;
+    background-color: red;
+    width: 20px;
+    text-align: center;
+    color: white;
+    top: -23px;
+    left:-5px;
+    position: absolute;
+}
+
 .remove {
 	transition: all .4s;
 }
@@ -85,4 +114,28 @@
 }
 .gender legend{
 	color:black;
+}
+.chat-msg-container {
+	position: relative;
+}
+.chat-msg-container img {
+	width:50px;
+	
+}
+.chat-msg-container{
+	margin-top:30px;
+
+}
+.chat-msg-container a{
+	z-index: 9;
+}
+.chat-msg-container a.from{
+    position: absolute;
+    right: 30px;
+    bottom: 0;
+}
+.chat-msg-container a.to {
+	position: absolute;
+	left:30px;
+    bottom: 0;
 }
