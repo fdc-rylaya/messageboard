@@ -24,16 +24,24 @@
 <?php $this->end(); ?>
 
 <div class="col-md-12">
+
   	<div class="row">
+
     		<div class="col-md-4 col-md-offset-4">
-            <?php //echo $this->Flash->render('auth'); ?>
-            <?php echo $this->Form->create('User'); ?>
-                <fieldset>
-                    <?php echo $this->Form->input('email');
-                    echo $this->Form->input('password');
-                ?>
-                </fieldset>
-            <?php echo $this->Form->end(__('Login')); ?>
+          <div class='panel panel-primary'>
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">
+              <?php //echo $this->Flash->render('auth'); ?>
+              <?php echo $this->Form->create('User'); ?>
+                  <fieldset>
+                      <?php echo $this->Form->input('email');
+                      echo $this->Form->input('password');
+                  ?>
+                  </fieldset>
+                  <button class="btn btn-success">Login</button>
+              <?php echo $this->Form->end(); ?>
+              </div>
+          </div>
     		</div>	
   	</div>
 </div>

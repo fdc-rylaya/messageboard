@@ -30,7 +30,7 @@ $("#send-reply").on('click',function(){
           'content' : $("#message-content").val()
         }
       }).done(function( html ) {
-        $("#messages-container").prepend(html); 
+        $("#messages-container").prepend(html).fadeIn('slow'); 
         $("#message-content").val('')       
         //console.log(html)
       });

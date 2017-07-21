@@ -24,9 +24,12 @@
 <?php $this->end(); ?>
 
 <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-primary">
+    <div class="panel-heading">User's Info</div>
+    <div class="panel-body">
     <?php echo $this->Form->create('User'); ?>
     	<fieldset>
-      		<legend><?php //echo __('Register'); ?></legend>
+      		
           		<div class="form-group">
             			<?php
             				echo $this->Form->input('name', array('class' => 'form-control'));
@@ -36,5 +39,8 @@
             			?>
           		</div>
     	</fieldset>
-    <?php echo $this->Form->end(__('Submit', array('class' => 'btn btn-primary'))); ?>
+      <button class="btn btn-success">Submit</button>
+      </div>
+    <?php echo $this->Form->end(); ?>
+    </div>
 </div>
