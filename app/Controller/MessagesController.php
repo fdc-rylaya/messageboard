@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+
+
 /**
  * Messages Controller
  *
@@ -64,6 +66,14 @@ class MessagesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+
+		//open socket
+		// $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		// socket_bind($socket, 'localhost');
+		// socket_listen($socket);
+		// socket_accept($socket);
+
+
 		$this->loadModel('User');
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('User does not exist'));
@@ -87,9 +97,11 @@ class MessagesController extends AppController {
 		);
 		//debug($toUser);
 		$this->set('toUser', $toUser);
+		$this->set('from', $user);
 		$this->set('to_id',$id);
 		$this->set('from_id',$user['id']);
 		$this->set('last_id', $message['Message']['id']);
+		$this->set('created', $message['Message']['created']);
 	}
 
 /**

@@ -63,6 +63,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				echo $this->Html->script('sweetalert.min');
 				echo $this->Html->script('main');
 				echo $this->fetch('messagesScript');
+				echo $this->fetch('wsocket');
 			?>
 		</div>
 	</div>

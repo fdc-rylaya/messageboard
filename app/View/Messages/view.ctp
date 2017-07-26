@@ -39,7 +39,7 @@ $this->start('navbar'); ?>
             <div class="panel panel-primary">
                 <div class="panel-heading"> 
                     <h3><?php echo $toUser['User']['name']; ?> </h3>
-                    <span class="label label-success">Typically replies after an hour...</span>
+                    <span class="label label-danger" id="status">Connecting to chat server...</span>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -56,8 +56,17 @@ $this->start('navbar'); ?>
     </div>
 </div>
 <?php
-	$this->Js->set('data', array('to_id' => $to_id,'from_id' => $from_id, 'last_id' => $last_id));
+	$this->Js->set('data', array(
+    'to_id' => $to_id,
+    'from_id' => $from_id, 
+    'last_id' => $last_id, 
+    'to' => $toUser['User'], 
+    'messageCreated' => $created, 
+    'from' => $from
+    )
+  );
 	echo $this->Html->script('messages', array('block' => 'messagesScript')); 
+  echo $this->Html->script('wsocket', array('block' => 'wsocket')); 
 	echo $this->Js->writeBuffer(array('onDomReady' => false));
 	
 ?>

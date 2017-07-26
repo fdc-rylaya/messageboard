@@ -48,6 +48,7 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+
 		if (!$this->Auth->loggedIn()) {
 			return $this->redirect('/users/login');
 		}
@@ -55,6 +56,8 @@ class UsersController extends AppController {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
+		
+
 		$user = $this->User->find('first', array(
 				'conditions' => array(
 						'User.id' => $id
